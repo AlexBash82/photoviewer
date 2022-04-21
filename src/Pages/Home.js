@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React from 'react'
 
-export default function Home() {
-  const [albums, setAlbums] = React.useState([])
+const divAlbum = {
+  width: '5%',
+  float: 'left',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+  margin: '2rem',
+}
 
-  useEffect(() => {
-    axios.get(`https://jsonplaceholder.typicode.com/photos`).then((res) => {
-      setAlbums(
-        res.data.reduce((result, item) => {
-          return result.includes(item.albumId)
-            ? result
-            : [...result, item.albumId]
-        }, [])
-      )
-    })
-  })
-
+function Home({ selectAlbum, albumsArr }) {
   return (
     <div>
-      <ul>
-        {albums.map((item) => {
-          return <li>{item}</li>
-        })}
-      </ul>
+      {albumsArr.map((item) => {
+        return (
+          <div style={divAlbum} onClick={() => selectAlbum(item)}>
+            <h1>{item}</h1>
+          </div>
+        )
+      })}
     </div>
   )
 }
+
+export default Home

@@ -1,11 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Nav, NavLink, Navbar, Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-
+import axios from 'axios'
 import Home from '../Pages/Home'
 import Photos from '../Pages/Photos'
 
 function Header() {
+  const [albumsArr, setAlbumsArr] = React.useState([])
+  const [photosArr, setPhotosArr] = React.useState([])
+  const [selectedAlb, setSelectedAlb] = React.useState(1)
+
+  // useEffect(() => {
+  axios.get(`https://jsonplaceholder.typicode.com/photos`).then((res) => {
+    setPhotosArr(res.data)
+
+    setAlbumsArr(
+      res.data.reduce((result, item) => {
+        return result.includes(item.albumId)
+          ? result
+          : [...result, item.albumId]
+      }, [])
+    )
+  })
+  //})
+
+  function selectAlbum(num) {
+    setSelectedAlb(num)
+  }
+
   return (
     <div>
       <Router>
@@ -33,8 +55,14 @@ function Header() {
         </Navbar>
 
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/photos" element={<Photos />} />
+          <Route
+            path="/"
+            element={<Home albumsArr={albumsArr} selectAlbum={selectAlbum} />}
+          />
+          <Route
+            path="/photos"
+            element={<Photos photosArr={photosArr} selectedAlb={selectedAlb} />}
+          />
         </Routes>
       </Router>
     </div>
