@@ -1,33 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Nav, NavLink, Navbar, Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import axios from 'axios'
+
 import Home from '../Pages/Home'
 import Photos from '../Pages/Photos'
 
-function Header() {
-  const [albumsArr, setAlbumsArr] = React.useState([])
-  const [photosArr, setPhotosArr] = React.useState([])
-  const [selectedAlb, setSelectedAlb] = React.useState(1)
+function Header({ photosArr, albumsArr }) {
+  const [selectedAlb, setSelectedAlb] = useState(1)
 
-  // useEffect(() => {
-  axios.get(`https://jsonplaceholder.typicode.com/photos`).then((res) => {
-    setPhotosArr(res.data)
-
-    setAlbumsArr(
-      res.data.reduce((result, item) => {
-        return result.includes(item.albumId)
-          ? result
-          : [...result, item.albumId]
-      }, [])
-    )
-  })
-  //})
-
-  function selectAlbum(num) {
+  function selectAlb(num) {
     setSelectedAlb(num)
   }
-
   return (
     <div>
       <Router>
@@ -44,10 +27,7 @@ function Header() {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
                 <NavLink as={Link} to="/">
-                  Home
-                </NavLink>
-                <NavLink as={Link} to="/photos">
-                  Photos
+                  Albums
                 </NavLink>
               </Nav>
             </Navbar.Collapse>
@@ -57,7 +37,13 @@ function Header() {
         <Routes>
           <Route
             path="/"
-            element={<Home albumsArr={albumsArr} selectAlbum={selectAlbum} />}
+            element={
+              <Home
+                photosArr={photosArr}
+                selectAlb={selectAlb}
+                albumsArr={albumsArr}
+              />
+            }
           />
           <Route
             path="/photos"

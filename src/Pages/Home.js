@@ -1,23 +1,28 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const divAlbum = {
   width: '5%',
   float: 'left',
-  border: '1px solid #ccc',
+  border: '2px solid black',
   borderRadius: '4px',
   margin: '2rem',
 }
 
-function Home({ selectAlbum, albumsArr }) {
+function Home({ photosArr, albumsArr, selectAlb }) {
   return (
     <div>
-      {albumsArr.map((item) => {
-        return (
-          <div style={divAlbum} onClick={() => selectAlbum(item)}>
-            <h1>{item}</h1>
-          </div>
-        )
-      })}
+      <div>
+        {albumsArr.map((item) => {
+          return (
+            <Link to="/photos">
+              <div style={divAlbum} key={item} onClick={() => selectAlb(item)}>
+                <h1>{item}</h1>
+              </div>
+            </Link>
+          )
+        })}
+      </div>
     </div>
   )
 }
