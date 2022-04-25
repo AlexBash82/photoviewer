@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from '../Components/Modal'
 
 const divPhoto = {
@@ -17,15 +17,35 @@ const divText = {
 }
 
 function Photos({ photosArr, selectedAlb }) {
+  const [show, setShow] = useState(false)
+  const [selectedPhoto, setSelectedPhoto] = useState('0')
+
+  function openClose(item) {
+    setSelectedPhoto(item)
+    setShow(!show)
+  }
+
   return (
     <div>
       <div>
         <h1>Photoalbum № {selectedAlb}</h1>
-        <Modal />
+        {show && (
+          <Modal
+            photosArr={photosArr}
+            openClose={openClose}
+            selectedPhoto={selectedPhoto}
+          />
+        )}
       </div>
       {photosArr.map((item) => {
         return item.albumId === selectedAlb ? (
-          <div style={divPhoto} key={item.id}>
+          <div
+            style={divPhoto}
+            key={item.id}
+            onClick={() => {
+              openClose(item.id)
+            }}
+          >
             <img src={item.thumbnailUrl} alt="colorpic" />
             <p style={divText}>{item.title}</p>
           </div>

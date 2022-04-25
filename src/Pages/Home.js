@@ -18,8 +18,8 @@ function Home({ albumsArr, selectAlb }) {
       <div>
         {albumsArr.map((item) => {
           return (
-            <Link to="/photos">
-              <div style={divAlbum} key={item} onClick={() => selectAlb(item)}>
+            <Link to="/photos" key={item}>
+              <div style={divAlbum} onClick={() => selectAlb(item)}>
                 <h1>{item}</h1>
               </div>
             </Link>
