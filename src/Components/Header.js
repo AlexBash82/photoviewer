@@ -37,13 +37,7 @@ function Header({ photosArr, albumsArr }) {
         <Routes>
           <Route
             path="/"
-            element={
-              <Home
-                photosArr={photosArr}
-                selectAlb={selectAlb}
-                albumsArr={albumsArr}
-              />
-            }
+            element={<Home selectAlb={selectAlb} albumsArr={albumsArr} />}
           />
           <Route
             path="/photos"
