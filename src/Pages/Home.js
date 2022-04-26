@@ -10,6 +10,8 @@ const divAlbum = {
 }
 
 function Home({ albumsArr, selectAlb }) {
+  console.log('render-home')
+
   return (
     <div>
       <div>

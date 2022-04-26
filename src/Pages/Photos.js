@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Modal from '../Components/Modal'
 
 const divPhoto = {
@@ -18,10 +18,11 @@ const divText = {
 
 function Photos({ photosArr, selectedAlb }) {
   const [show, setShow] = useState(false)
-  const [selectedPhoto, setSelectedPhoto] = useState('0')
+  const selectedPhoto = useRef('1')
+  console.log('render-photos')
 
   function openClose(item) {
-    setSelectedPhoto(item)
+    selectedPhoto.current = item
     setShow(!show)
   }
 
@@ -33,7 +34,7 @@ function Photos({ photosArr, selectedAlb }) {
           <Modal
             photosArr={photosArr}
             openClose={openClose}
-            selectedPhoto={selectedPhoto}
+            selectedPhoto={selectedPhoto.current}
           />
         )}
       </div>

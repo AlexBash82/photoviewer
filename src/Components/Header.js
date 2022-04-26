@@ -8,9 +8,12 @@ import Photos from '../Pages/Photos'
 function Header({ photosArr, albumsArr }) {
   const [selectedAlb, setSelectedAlb] = useState(1)
 
+  console.log('render-header')
+
   function selectAlb(num) {
     setSelectedAlb(num)
   }
+
   return (
     <div>
       <Router>

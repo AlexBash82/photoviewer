@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import axios from 'axios'
 import Header from './Components/Header'
 
 function App() {
-  const [photosArr, setPhotosArr] = useState([])
+  const photosArr = useRef([])
   const [albumsArr, setAlbumsArr] = useState([])
+
+  console.log('render-app')
 
   useEffect(() => {
     axios.get(`https://jsonplaceholder.typicode.com/photos`).then((res) => {
-      setPhotosArr(res.data)
+      photosArr.current = res.data
       setAlbumsArr(
         res.data.reduce((result, item) => {
           return result.includes(item.albumId)
@@ -23,7 +25,7 @@ function App() {
 
   return (
     <div>
-      <Header photosArr={photosArr} albumsArr={albumsArr} />
+      <Header photosArr={photosArr.current} albumsArr={albumsArr} />
     </div>
   )
 }
